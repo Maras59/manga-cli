@@ -56,7 +56,7 @@ def draw(array):
     '''
     for x in array:
         for y in x:
-            print(ASCII_POOL[y], end='', flush=True)
+            print(ASCII_POOL[y], end='')
         print()
 
 

@@ -7,7 +7,7 @@ void run_script(WINDOW *win) {
     char buffer[256];
     int y = 1;
 
-    pipe = popen("./your_script", "r");
+    pipe = popen("./python/utils.py", "r");
     if (pipe == NULL) {
         mvwprintw(win, 1, 1, "Failed to run script.");
         wrefresh(win);
