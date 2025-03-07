@@ -8,7 +8,7 @@ ASCII_POOL = " `.-':_,^=;><+!rc*/z?sLTv)J7(|Fi{C}fI31tlu[neoZ5Yxjya]2ESwqkP6h9d4
 
 def conv_image(fname):
     '''
-    Converts image to single channel bitmap, also does some post proccesing to aid the ascii renderer
+    Converts image to single channel bitmap, also does some post proccesing to aid the draw method
     '''
     try:
         img = Image.open(fname)
@@ -48,9 +48,9 @@ def normalize_intensity(array):
     return img_array
 
 
-def render(array):
+def draw(array):
     '''
-    Takes an input array and renders it to the command line using a very rudimentary method
+    Takes an input array and draws it to the command line using a very rudimentary method
     Every pixel is represented by an ascii character that is selected based off of intensity of the pixel
     '''
     for x in array:
@@ -62,4 +62,4 @@ def render(array):
 
 image_array = conv_image('tmp/image2.png')
 image_array = normalize_intensity(image_array)
-render(image_array)
+draw(image_array)
