@@ -35,6 +35,7 @@ def conv_image(fname):
         print(f'Error: File "{fname}" not found.')
         return None
 
+
 def normalize_intensity(array):
     '''
     Takes input array and normalizes the intensity values for ascii pool
