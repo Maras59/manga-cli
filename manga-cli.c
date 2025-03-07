@@ -1,15 +1,18 @@
 #include <ncurses.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <errno.h>
 
 void run_script(WINDOW *win) {
     FILE *pipe;
     char buffer[256];
     int y = 1;
 
-    pipe = popen("./python/utils.py", "r");
+    pipe = popen("python3 ./python/utils.py", "r");
     if (pipe == NULL) {
-        mvwprintw(win, 1, 1, "Failed to run script.");
+        mvwprintw(win, 1, 1, "Failed to run script: %s", strerror(errno));
         wrefresh(win);
         return;
     }
@@ -18,27 +21,42 @@ void run_script(WINDOW *win) {
         mvwprintw(win, y, 1, "%s", buffer);
         wrefresh(win);
         y++;
+        usleep(50000);  // Delay to slow down the drawing
+    }
+
+    // If no output is received from the Python script
+    if (y == 1) {
+        mvwprintw(win, 1, 1, "No output from script.");
+        wrefresh(win);
     }
 
     pclose(pipe);
 }
 
 int main() {
-    initscr();
-    noecho();
-    cbreak();
-    curs_set(0);
+    initscr();      
+    noecho();  
+    cbreak();       
+    curs_set(0);    
 
-    WINDOW *win = newwin(LINES - 2, COLS - 2, 1, 1);
-    box(win, 0, 0);
+    WINDOW *win = newwin(LINES - 2, COLS - 2, 1, 1);  
     wrefresh(win);
 
     run_script(win);
 
     mvwprintw(win, LINES - 3, 2, "Press any key to exit...");
-    wrefresh(win);
-    getch();
+    wrefresh(win); 
+
+    nodelay(win, TRUE);
+
+    int ch;
+    while ((ch = wgetch(win)) == ERR) {
+        usleep(50000);  // Adjust the delay as needed
+    }
+
+    refresh();
 
     endwin();
+
     return 0;
 }
