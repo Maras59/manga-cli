@@ -6,11 +6,14 @@
 #include <errno.h>
 
 void run_script(WINDOW *win) {
-    FILE *pipe;
     char buffer[256];
     int y = 1;
 
-    pipe = popen("python3 ./python/utils.py", "r");
+    char command[256];
+    snprintf(command, sizeof(command), "python3 ./pyscripts/utils.py %d %d", LINES, COLS);
+
+    // Open the pipe to run the command
+    FILE *pipe = popen(command, "r");
     if (pipe == NULL) {
         mvwprintw(win, 1, 1, "Failed to run script: %s", strerror(errno));
         wrefresh(win);
@@ -39,7 +42,7 @@ int main() {
     cbreak();       
     curs_set(0);    
 
-    WINDOW *win = newwin(LINES - 2, COLS - 2, 1, 1);  
+    WINDOW *win = newwin(LINES - 2, COLS - 2, 0, 0);  
     wrefresh(win);
 
     run_script(win);
@@ -57,6 +60,8 @@ int main() {
     refresh();
 
     endwin();
+
+    printf("python3 ./pyscripts/utils.py %d %d\n", LINES, COLS);
 
     return 0;
 }
