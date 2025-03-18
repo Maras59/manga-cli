@@ -24,7 +24,7 @@ void run_script(WINDOW *win) {
         mvwprintw(win, y, 1, "%s", buffer);
         wrefresh(win);
         y++;
-        usleep(50000);  // Delay to slow down the drawing
+        usleep(100);  // Delay to slow down the drawing
     }
 
     // If no output is received from the Python script

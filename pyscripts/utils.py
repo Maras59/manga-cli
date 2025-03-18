@@ -34,11 +34,11 @@ def conv_image(fname, max_height, max_width):
 
         img = img.resize((new_width, new_height), Image.LANCZOS)
 
-        enhancer = ImageEnhance.Contrast(img)
-        img = enhancer.enhance(2.0)
+        # enhancer = ImageEnhance.Contrast(img)
+        # img = enhancer.enhance(2.0)
 
-        sharpen = ImageEnhance.Sharpness(img)
-        img = sharpen.enhance(2.0)
+        # sharpen = ImageEnhance.Sharpness(img)
+        # img = sharpen.enhance(2.0)
 
         img.save('pyscripts/tmp/output.bmp', format='BMP')
 
@@ -65,7 +65,7 @@ def draw(array):
 
 width = int(sys.argv[1])
 height = int(sys.argv[2])
-image_array = conv_image('pyscripts/tmp/image.png', width, height)
+image_array = conv_image('pyscripts/tmp/image5.png', width, height)
 
 if image_array is None:
     sys.exit(1)
